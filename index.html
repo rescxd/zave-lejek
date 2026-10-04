@@ -645,27 +645,15 @@
             leadForm.reset();
         });
 
-        // Process V2 Bars Animation
+        // Process V2 Bars Animation - NOWA PROSTA LOGIKA
         const processCards = document.querySelectorAll('.processv2-card');
-        let currentCard = 0;
-        let currentBar = 0;
-        let animationInterval = null;
-        let isHovering = false;
-        let pendingTimeouts = []; // Przechowuj wszystkie timeouty
-        let fadeOutTimeout = null;
+        let activeCardIndex = 0;  // Który kafelek jest aktywny
+        let currentBar = 0;       // Która linia się właśnie animuje
+        let animationState = 'filling'; // 'filling', 'paused', 'clearing'
+        let isUserHovering = false;
+        let hoveredCardIndex = -1;
 
-        function clearAllTimeouts() {
-            // Wyczyść wszystkie oczekujące timeouty
-            pendingTimeouts.forEach(timeout => clearTimeout(timeout));
-            pendingTimeouts = [];
-            if (fadeOutTimeout) {
-                clearTimeout(fadeOutTimeout);
-                fadeOutTimeout = null;
-            }
-        }
-
-        function clearAllBars() {
-            clearAllTimeouts();
+        function clearAllCards() {
             processCards.forEach(card => {
                 card.classList.remove('animating');
                 const bars = card.querySelectorAll('.processv2-bars span');
@@ -673,122 +661,97 @@
             });
         }
 
-        function fadeOutCard(cardIndex) {
-            const card = processCards[cardIndex];
-            const bars = card.querySelectorAll('.processv2-bars span');
-
-            // Szybko wyłącz linie od 1 do 44
-            bars.forEach((bar, i) => {
-                const timeout = setTimeout(() => {
-                    bar.classList.remove('active');
-                }, i * 10);
-                pendingTimeouts.push(timeout);
-            });
-
-            // Po zakończeniu usuń klasę animating
-            const timeout = setTimeout(() => {
-                card.classList.remove('animating');
-            }, bars.length * 10);
-            pendingTimeouts.push(timeout);
-        }
-
         function animateBars() {
-            if (isHovering) return;
-
-            const card = processCards[currentCard];
+            const card = processCards[activeCardIndex];
             const bars = card.querySelectorAll('.processv2-bars span');
 
-            if (currentBar === 0) {
-                card.classList.add('animating');
+            // FILLING - wypełnianie linii
+            if (animationState === 'filling') {
+                if (currentBar === 0) {
+                    card.classList.add('animating');
+                }
+
+                if (currentBar < bars.length) {
+                    bars[currentBar].classList.add('active');
+                    currentBar++;
+                } else {
+                    // Wszystkie linie wypełnione - przejdź do pauzy
+                    animationState = 'paused';
+                    currentBar = 0; // Reset dla kolejnego stanu
+                }
             }
-
-            if (currentBar < bars.length) {
-                bars[currentBar].classList.add('active');
+            // PAUSED - czekanie przed wyczyszczeniem
+            else if (animationState === 'paused') {
                 currentBar++;
-            } else if (currentBar === bars.length) {
-                currentBar++; // Zwiększ aby nie wchodzić ponownie do tego warunku
+                // Czekaj około 250ms (250/80 ≈ 3 iteracje)
+                if (currentBar >= 3) {
+                    animationState = 'clearing';
+                    currentBar = 0;
+                    card.classList.remove('animating'); // Badge zaczyna fade
+                }
+            }
+            // CLEARING - czyszczenie linii (szybkie - max 1.5s)
+            else if (animationState === 'clearing') {
+                // Użyj timeoutów dla szybkiego clearingu (1.5s / 44 = ~34ms per line)
+                bars.forEach((bar, i) => {
+                    setTimeout(() => {
+                        bar.classList.remove('active');
+                    }, i * 10); // 34ms * 44 = 1496ms (~1.5s)
+                });
 
-                // Czekaj przed rozpoczęciem fade out badge I linii
-                fadeOutTimeout = setTimeout(() => {
-                    if (!isHovering) {
-                        // Usuń klasę animating (badge zacznie fade out TERAZ)
-                        card.classList.remove('animating');
-
-                        // Rozpocznij fade out linii
-                        const bars = card.querySelectorAll('.processv2-bars span');
-                        bars.forEach((bar, i) => {
-                            const timeout = setTimeout(() => {
-                                bar.classList.remove('active');
-                            }, i * 10);
-                            pendingTimeouts.push(timeout);
-                        });
-
-                        // Przejdź do następnego kafelka
-                        currentCard = (currentCard + 1) % processCards.length;
-                        currentBar = 0;
+                // Przejdź do następnego kafelka po zakończeniu
+                setTimeout(() => {
+                    if (!isUserHovering) {
+                        activeCardIndex = (activeCardIndex + 1) % processCards.length;
+                    } else {
+                        // Jeśli user właśnie zjechał z hoveru, przejdź do następnego
+                        activeCardIndex = (hoveredCardIndex + 1) % processCards.length;
+                        isUserHovering = false;
+                        hoveredCardIndex = -1;
                     }
-                }, 250); // <-- TUTAJ zmieniasz opóźnienie (w milisekundach)
+                    currentBar = 0;
+                    animationState = 'filling';
+                }, 500); // 10ms * 44 linie = 440ms + 60ms bufora = 500ms
+
+                // Zmień stan żeby nie wejść tutaj ponownie
+                animationState = 'waiting_for_clear';
+            }
+            // WAITING_FOR_CLEAR - czekanie aż clearing się zakończy
+            else if (animationState === 'waiting_for_clear') {
+                // Nic nie rób, czekaj na timeout
             }
         }
 
-        // Rozpocznij automatyczną animację
-        animationInterval = setInterval(animateBars, 80);
+        // Rozpocznij automatyczną animację - stały interval
+        setInterval(animateBars, 60);
 
-        // Obsługa hover
+        // Obsługa hover - PROSTA LOGIKA
         processCards.forEach((card, index) => {
-            let hoverTimeouts = [];
-            let isAnimatingHover = false;
-
             card.addEventListener('mouseenter', () => {
-                isHovering = true;
-                isAnimatingHover = true;
+                // Sprawdź czy to ten sam kafelek co poprzednio
+                const isSameCard = (activeCardIndex === index && (animationState === 'filling' || animationState === 'paused'));
 
-                // Wyczyść wszystkie kafelki i timeouty natychmiast
-                clearAllBars();
-                hoverTimeouts.forEach(t => clearTimeout(t));
-                hoverTimeouts = [];
+                if (isSameCard) {
+                    // Ten sam kafelek - kontynuuj animację, nie resetuj
+                    isUserHovering = true;
+                    hoveredCardIndex = index;
+                    // NIE resetuj currentBar ani animationState
+                } else {
+                    // Inny kafelek - wyczyść wszystko i zacznij od nowa
+                    clearAllCards();
 
-                // Oznacz kafelek jako animujący
-                card.classList.add('animating');
-
-                // Animuj kafelek z hoverem
-                const bars = card.querySelectorAll('.processv2-bars span');
-                bars.forEach((bar, i) => {
-                    const timeout = setTimeout(() => {
-                        bar.classList.add('active');
-
-                        // Sprawdź czy to ostatnia linia
-                        if (i === bars.length - 1) {
-                            isAnimatingHover = false;
-                        }
-                    }, i * 20);
-                    hoverTimeouts.push(timeout);
-                });
+                    // Ustaw aktywny kafelek na ten z hoverem
+                    activeCardIndex = index;
+                    hoveredCardIndex = index;
+                    isUserHovering = true;
+                    currentBar = 0;
+                    animationState = 'filling';
+                }
             });
 
             card.addEventListener('mouseleave', () => {
-                // Oblicz ile czasu pozostało do końca animacji
-                const bars = card.querySelectorAll('.processv2-bars span');
-                const remainingTime = bars.length * 20; // Maksymalny czas animacji
-
-                // Poczekaj aż animacja się skończy
-                const waitForAnimationEnd = setTimeout(() => {
-                    isHovering = false;
-
-                    // Poczekaj dodatkowe 250ms (opóźnienie jak w normalnej animacji)
-                    const pauseTimeout = setTimeout(() => {
-                        // Rozpocznij fade out kafelka z hoveru
-                        fadeOutCard(index);
-
-                        // Ustaw animację od następnego kafelka
-                        currentCard = (index + 1) % processCards.length;
-                        currentBar = 0;
-                    }, 250); // <-- Opóźnienie przed fade out
-
-                    hoverTimeouts.push(pauseTimeout);
-                }, isAnimatingHover ? remainingTime : 0);
-
-                hoverTimeouts.push(waitForAnimationEnd);
+                // Po prostu pozwól animacji dokończyć naturalnie
+                // Flaga isUserHovering zostanie sprawdzona po zakończeniu cyklu
             });
         });
     </script>
