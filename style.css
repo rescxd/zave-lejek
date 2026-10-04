@@ -1319,15 +1319,16 @@ filter: brightness(0.95);
     /* Process V2 Section - Mobile */
     .processv2-wrapper {
         flex-direction: column;
+        gap: 48px;
     }
 
     .processv2-line {
-        width: 100%;
-        height: 1px;
+        display: none;
     }
 
     .processv2-card {
         width: 100%;
+        padding: 0;
     }
 
     .processv2-title {
