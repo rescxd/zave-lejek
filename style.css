@@ -1126,6 +1126,10 @@ filter: brightness(0.95);
     gap: 24px;
 }
 
+.processv2-mobile-heading {
+    display: none;
+}
+
 .processv2-badge {
     font-family: 'Inter', sans-serif;
     font-size: 14px;
@@ -1392,6 +1396,27 @@ filter: brightness(0.95);
         padding: 0;
     }
 
+    .processv2-mobile-heading {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .processv2-card-content > .processv2-badge,
+    .processv2-bars,
+    .processv2-text .processv2-card-title {
+        display: none;
+    }
+
+    .processv2-badge--mobile {
+        flex: 0 0 auto;
+        height: 30px;
+        margin: 0;
+        padding: 0 12px;
+        font-size: 12px;
+    }
+
     .processv2-title {
         font-size: 2rem;
     }
@@ -1645,6 +1670,15 @@ filter: brightness(0.95);
         overflow: visible;
     }
 
+    .processv2-text {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .processv2-card-content {
+        gap: 16px;
+    }
+    
     .comparison-table-container {
         width: 100%;
         max-width: 100%;
