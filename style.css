@@ -1207,26 +1207,27 @@ filter: brightness(0.95);
 @media (max-width: 480px) {
     .comparison-table-section {
         padding: 2rem 0;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: thin;
+        overflow: visible;
     }
 
     .comparison-table-container {
-        min-width: 520px;
+        width: 100%;
+        max-width: 100%;
         padding: 0 16px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
         margin: 0;
     }
 
     .comparison-table-grid {
-        min-width: 520px;
+        min-width: 420px;
         width: max-content;
         gap: 0;
     }
 
     .comparison-table-header-row,
     .comparison-table-row {
-        grid-template-columns: minmax(110px, 0.8fr) minmax(120px, 1fr) minmax(120px, 1fr);
+        grid-template-columns: 200px 200px 200px;
         column-gap: 8px;
     }
 
@@ -1643,7 +1644,8 @@ filter: brightness(0.95);
     }
 
     .comparison-table-container {
-        min-width: 420px;
+        width: 100%;
+        max-width: 100%;
         padding: 0 16px;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
