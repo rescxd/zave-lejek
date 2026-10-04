@@ -166,6 +166,8 @@ span.headline-line-2 {
     margin-bottom: 2rem;
     line-height: 1.7;
     letter-spacing: -0.03em;
+    padding-left: 16px;
+    padding-right: 16px;
 }
 
 .description strong {
@@ -1928,6 +1930,11 @@ filter: brightness(0.95);
 }
 
 @media (max-width: 480px) {
+    .audience-column + .audience-column {
+        border-left: none;
+        border-top: none;
+    }
+
     .audience-title {
         font-size: 34px;
     }
