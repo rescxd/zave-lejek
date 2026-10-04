@@ -519,6 +519,10 @@ border: 1px solid rgba(255, 255, 255, 0.30);; /* Czyste białe obramowanie 100% 
     margin: 0 auto;
 }
 
+.comparison-table-hint {
+    display: none;
+}
+
 .comparison-table-title {
     font-family: 'Inter', sans-serif;
     font-size: 52px;
@@ -676,7 +680,7 @@ border: 1px solid rgba(255, 255, 255, 0.30);; /* Czyste białe obramowanie 100% 
 }
 
 .opinions-container {
-    max-width: 1320px;
+    max-width: 1420px;
     margin: 0 auto;
 }
 
@@ -871,6 +875,180 @@ border: 1px solid rgba(255, 255, 255, 0.30);; /* Czyste białe obramowanie 100% 
     font-weight: 400;
     letter-spacing: -0.04em;
     line-height: 1.45;
+}
+
+/* Founder's Note Section */
+.founder-note-section {
+    padding: 3rem 1.5rem;
+}
+
+.founder-note-card {
+    position: relative;
+    max-width: 550px;
+    margin: 0 auto;
+    padding: 48px 48px 0;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #F7F7F7;
+}
+
+.founder-note-eyebrow {
+    margin: 0 0 8px;
+    color: rgba(4, 5, 7, 0.5);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: capitalize;
+}
+
+.founder-note-title {
+    margin: 0 0 28px;
+    background: linear-gradient(180deg, rgba(4, 5, 7, 0.9) 0%, rgba(4, 5, 7, 0.75) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -0.07em;
+    line-height: 1.2;
+}
+
+.founder-note-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.founder-note-copy p {
+    margin: 0;
+    color: rgba(4, 5, 7, 0.85);
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    line-height: 170%;
+}
+
+.founder-note-signoff {
+    display: flex;
+    align-items: flex-end;
+    min-height: 266px;
+    padding: 0 200px 32px 0;
+    margin-top: 8px;
+}
+
+.founder-note-signature-block {
+    display: inline-block;
+    width: min(200px, 100%);
+    max-width: 100%;
+    padding-bottom: 32px;
+}
+
+.founder-note-signature {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    max-width: 100%;
+}
+
+.founder-note-role {
+    margin: 6px 0 0;
+    max-width: 75%;
+    color: rgba(4, 5, 7, 0.6);
+    font-size: 14px;
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+}
+
+.founder-note-photo {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 286px;
+    height: 234px;
+}
+
+.founder-note-image {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: block;
+    width: 105%;
+    height: 105%;
+    object-fit: contain;
+    object-position: right bottom;
+}
+
+@media (max-width: 768px) {
+    .founder-note-section {
+        padding: 2rem 1.25rem;
+    }
+
+    .founder-note-card {
+        padding: 32px 28px 0;
+    }
+
+    .founder-note-signoff {
+        min-height: 266px;
+        padding-right: 200px;
+        margin-top: -20px;
+    }
+
+    .founder-note-signature-block {
+        width: min(220px, 100%);
+    }
+
+    .founder-note-photo {
+        right: 0;
+        width: 286px;
+    }
+}
+
+@media (max-width: 480px) {
+    .founder-note-section {
+        padding: 1.5rem 16px;
+    }
+
+    .founder-note-card {
+        padding: 32px 24px 0;
+    }
+
+    .founder-note-title {
+        font-size: 28px;
+    }
+
+    .founder-note-signoff {
+        min-height: 206px;
+        padding: 0 120px 24px 0;
+
+    }
+
+    .founder-note-signature-block {
+        width: min(170px, 100%);
+        max-width: 72%;
+        padding-bottom: 24px;
+    }
+
+    .founder-note-role {
+        max-width: 72%;
+    }
+
+    .founder-note-photo {
+        right: 0;
+        width: 146px;
+        height: 182px;
+    }
+
+    .founder-note-signature {
+        width: 100%;
+        transform: scale(1.3);
+        padding-left: 10px;
+    }
+
+    .founder-note-role {
+        font-size: 12px;
+    }
+
 }
 
 /* FAQ Section */
@@ -1551,6 +1729,11 @@ filter: brightness(0.95);
         padding: 20px 24px;
     }
 
+    .faq-icon {
+        width: 24px;
+        height: 24px;
+    }
+
     .faq-answer p {
         font-size: 16px;
     }
@@ -1685,6 +1868,14 @@ filter: brightness(0.95);
         padding: 0 16px;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
+    }
+
+    .comparison-table-hint {
+        display: block;
+        margin: 20px 16px 0;
+        color: rgba(4, 5, 7, 0.6);
+        font-size: 12px;
+        text-align: center;
     }
 
     .comparison-table-title {
