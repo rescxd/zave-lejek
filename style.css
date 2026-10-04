@@ -445,6 +445,33 @@ border: 1px solid rgba(255, 255, 255, 0.30);; /* Czyste białe obramowanie 100% 
     .processv2-image {
         max-width: 100%;
     }
+
+    /* Comparison Table - Tablet */
+    .comparison-table-title {
+        font-size: 2.5rem;
+    }
+
+    .comparison-table-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .comparison-table-column {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .comparison-table-section {
+        padding: 3rem 1.25rem;
+    }
+
+    .comparison-table-cell {
+        padding: 0 2rem;
+    }
+
+    .comparison-table-header {
+        padding: 0 2rem;
+    }
 }
 
 .box {
@@ -453,6 +480,120 @@ border: 1px solid rgba(255, 255, 255, 0.30);; /* Czyste białe obramowanie 100% 
     display: flex;
 }
 
+/* Comparison Table Section */
+.comparison-table-section {
+    padding: 4rem 1.5rem;
+}
+
+.comparison-table-container {
+    max-width: 1420px;
+    margin: 0 auto;
+}
+
+.comparison-table-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 52px;
+    font-weight: 600;
+    letter-spacing: -0.07em;
+    line-height: 120%;
+    background: linear-gradient(180deg, rgba(4, 5, 7, 0.9) 0%, rgba(4, 5, 7, 0.75) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: left;
+    margin-bottom: 0;
+}
+
+.comparison-table-grid {
+    display: grid;
+    grid-template-columns: 460px 460px 460px;
+    gap: 0;
+    margin-top: 0;
+    border-bottom: 1px solid #E9E9EA;
+}
+
+.comparison-table-column {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-end;
+}
+
+.comparison-table-column:nth-child(2),
+.comparison-table-column:nth-child(3) {
+    margin-left: 20px;
+}
+
+.comparison-table-header {
+    height: 57px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 0 40px;
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: -0.07em;
+    color: rgba(4, 5, 7, 0.75);
+}
+
+.comparison-table-column.green .comparison-table-header {
+    background-color: #DFEED7;
+    border-radius: 12px 12px 0 0;
+}
+
+.comparison-table-column.pink .comparison-table-header {
+    background-color: #FADEDB;
+    border-radius: 12px 12px 0 0;
+}
+
+.comparison-table-logo {
+    height: 18px;
+    width: auto;
+}
+
+.comparison-table-cell {
+    height: 97px;
+    display: flex;
+    align-items: center;
+    padding: 0 40px;
+    border-bottom: 1px solid #E9E9EA;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    letter-spacing: -0.07em;
+}
+
+.comparison-table-column:nth-child(1) .comparison-table-cell {
+    font-size: 20px;
+    color: rgba(4, 5, 7, 0.7);
+    background-color: transparent;
+    padding: 0 40px 0 0;
+}
+
+.comparison-table-column:nth-child(2) .comparison-table-cell,
+.comparison-table-column:nth-child(3) .comparison-table-cell {
+    font-size: 18px;
+    color: rgba(4, 5, 7, 0.7);
+}
+
+.comparison-table-column.green .comparison-table-cell {
+    background-color: rgba(223, 238, 215, 0.35);
+}
+
+.comparison-table-column.pink .comparison-table-cell {
+    background-color: rgba(250, 222, 219, 0.35);
+}
+
+.comparison-table-cell:last-child {
+    border-bottom: none;
+}
+
+.comparison-table-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+}
 
 .comparison-container {
     max-width: 1320px;
@@ -796,7 +937,7 @@ filter: brightness(0.95);
 
 /* Process V2 Section */
 .processv2-section {
-    padding: 7rem 1.5rem;
+    padding: 7.5rem 1.5rem 4rem 1.5rem;
     padding-top: 360px;
 }
 
@@ -1221,6 +1362,45 @@ filter: brightness(0.95);
     .cta-check {
         width: 24px;
         height: 24px;
+    }
+
+    /* Comparison Table - Mobile */
+    .comparison-table-title {
+        font-size: 2rem;
+        line-height: 1.1;
+    }
+
+    .comparison-table-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .comparison-table-column {
+        justify-content: flex-start;
+    }
+
+    .comparison-table-section {
+        padding: 2rem 1.25rem;
+    }
+
+    .comparison-table-cell {
+        padding: 0 1.5rem;
+        font-size: 1rem;
+        height: 80px;
+    }
+
+    .comparison-table-column:nth-child(1) .comparison-table-cell {
+        font-size: 1rem;
+    }
+
+    .comparison-table-column:nth-child(2) .comparison-table-cell,
+    .comparison-table-column:nth-child(3) .comparison-table-cell {
+        font-size: 1rem;
+    }
+
+    .comparison-table-header {
+        padding: 0 1.5rem;
+        font-size: 1rem;
     }
 }
 
