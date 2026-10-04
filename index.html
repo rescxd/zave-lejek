@@ -54,7 +54,7 @@
 
             <!-- VSL Video Container -->
             <div class="vsl-container">
-                <style>wistia-player[media-id='e1dvrcl1e5']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/e1dvrcl1e5/swatch'); display: block; filter: blur(5px); padding-top:56.25%; }</style>
+                <style>wistia-player[media-id='e1dvrcl1e5']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/e1dvrcl1e5/swatch'); display: block; filter: blur(5px); }</style>
                 <wistia-player media-id="e1dvrcl1e5" aspect="1.7777777777777777"></wistia-player>
             </div>
         </div>
@@ -142,38 +142,40 @@
             <h2 class="comparison-table-title">Współpraca ze mną<br>vs inne agencje</h2>
 
             <div class="comparison-table-grid">
-                <!-- Column 1 - Labels -->
-                <div class="comparison-table-column">
-                    <div class="comparison-table-cell">Średnia długość projektu</div>
-                    <div class="comparison-table-cell">Opłata dodatkowa</div>
-                    <div class="comparison-table-cell">Elastyczność umowy</div>
-                    <div class="comparison-table-cell">Model rozliczeń</div>
-                    <div class="comparison-table-cell">Dedykowany opiekun</div>
+                <div class="comparison-table-row comparison-table-header-row">
+                    <div class="comparison-table-header comparison-table-header--empty"></div>
+                    <div class="comparison-table-header green">
+                        <img src="logo.svg" alt="IDVIRAL" class="comparison-table-logo">
+                    </div>
+                    <div class="comparison-table-header pink">Większość agencji</div>
                 </div>
 
-                <!-- Column 2 - IDVIRAL (Green) -->
-                <div class="comparison-table-column green">
-                    <div class="comparison-table-header">
-                        <img src="logo.svg" alt="IDVIRAL" class="comparison-table-logo">
-
-                    </div>
-                    <div class="comparison-table-cell">~30 dni</div>
-                    <div class="comparison-table-cell">0%</div>
-                    <div class="comparison-table-cell">Rezygnujesz kiedy chcesz</div>
-                    <div class="comparison-table-cell">Wszystko w cenie</div>
-                    <div class="comparison-table-cell">
+                <div class="comparison-table-row">
+                    <div class="comparison-table-cell comparison-table-cell--label">Średnia długość projektu</div>
+                    <div class="comparison-table-cell green">~30 dni</div>
+                    <div class="comparison-table-cell pink">~90 dni</div>
+                </div>
+                <div class="comparison-table-row">
+                    <div class="comparison-table-cell comparison-table-cell--label">Opłata dodatkowa</div>
+                    <div class="comparison-table-cell green">0%</div>
+                    <div class="comparison-table-cell pink">10-25%</div>
+                </div>
+                <div class="comparison-table-row">
+                    <div class="comparison-table-cell comparison-table-cell--label">Elastyczność umowy</div>
+                    <div class="comparison-table-cell green">Rezygnujesz kiedy chcesz</div>
+                    <div class="comparison-table-cell pink">Umowy na lata z karami umownymi</div>
+                </div>
+                <div class="comparison-table-row">
+                    <div class="comparison-table-cell comparison-table-cell--label">Model rozliczeń</div>
+                    <div class="comparison-table-cell green">Wszystko w cenie</div>
+                    <div class="comparison-table-cell pink">Dopłata za każdy dodatek</div>
+                </div>
+                <div class="comparison-table-row">
+                    <div class="comparison-table-cell comparison-table-cell--label">Dedykowany opiekun</div>
+                    <div class="comparison-table-cell green">
                         <img src="yes.png" alt="Tak" class="comparison-table-icon"> Tak
                     </div>
-                </div>
-
-                <!-- Column 3 - Większość agencji (Pink) -->
-                <div class="comparison-table-column pink">
-                    <div class="comparison-table-header">Większość agencji</div>
-                    <div class="comparison-table-cell">~90 dni</div>
-                    <div class="comparison-table-cell">10-25%</div>
-                    <div class="comparison-table-cell">Umowy na lata z karami umownymi</div>
-                    <div class="comparison-table-cell">Dopłata za każdy dodatek</div>
-                    <div class="comparison-table-cell">
+                    <div class="comparison-table-cell pink">
                         <img src="no.png" alt="Nie" class="comparison-table-icon"> Nie
                     </div>
                 </div>
@@ -211,35 +213,66 @@
         </div>
     </section>
 
-    <!-- Not For Section -->
-    <section class="not-for-section">
-        <div class="not-for-container">
-            <h2 class="not-for-title">Dla kogo nie jest ta współpraca</h2>
-
-            <div class="not-for-list">
-                <div class="not-for-item">
-                    <img src="x.png" alt="X" class="not-for-icon">
-                    <p class="not-for-text">Lorem ipsum dolor sit amet, bleh adipiscing elit.</p>
+    <!-- Audience Section -->
+    <section class="audience-section">
+        <div class="audience-container">
+            <div class="audience-column">
+                <div class="audience-card">
+                    <h2 class="audience-title">Dla kogo <span class="audience-highlight audience-highlight--not">nie jest</span> ta<br>współpraca</h2>
+                    <div class="audience-list">
+                        <div class="audience-item">
+                            <img src="no.png" alt="Nie" class="audience-icon">
+                            <p class="audience-text">Lorem ipsum dolor sit amet, bleh adipiscing elit.</p>
+                        </div>
+                        <div class="audience-item">
+                            <img src="no.png" alt="Nie" class="audience-icon">
+                            <p class="audience-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        </div>
+                        <div class="audience-item">
+                            <img src="no.png" alt="Nie" class="audience-icon">
+                            <p class="audience-text">Lorem ipsum dolor sit amet, tf adipiscing elit.</p>
+                        </div>
+                        <div class="audience-item">
+                            <img src="no.png" alt="Nie" class="audience-icon">
+                            <p class="audience-text">Lorem ipsum dolor sit amet, maruqis adipiscing elit.</p>
+                        </div>
+                        <div class="audience-item">
+                            <img src="no.png" alt="Nie" class="audience-icon">
+                            <p class="audience-text">Lorem ipsum dolor sit amet, brother adipiscing elit.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="not-for-item">
-                    <img src="x.png" alt="X" class="not-for-icon">
-                    <p class="not-for-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </div>
-                <div class="not-for-item">
-                    <img src="x.png" alt="X" class="not-for-icon">
-                    <p class="not-for-text">Lorem ipsum dolor sit amet, tf adipiscing elit.</p>
-                </div>
-                <div class="not-for-item">
-                    <img src="x.png" alt="X" class="not-for-icon">
-                    <p class="not-for-text">Lorem ipsum dolor sit amet, maruqis adipiscing elit.</p>
-                </div>
-                <div class="not-for-item">
-                    <img src="x.png" alt="X" class="not-for-icon">
-                    <p class="not-for-text">Lorem ipsum dolor sit amet, brother adipiscing elit.</p>
+            </div>
+            <div class="audience-column">
+                <div class="audience-card">
+                    <h2 class="audience-title">Dla kogo <span class="audience-highlight audience-highlight--yes">jest</span> ta<br>współpraca</h2>
+                    <div class="audience-list">
+                        <div class="audience-item">
+                            <img src="yes.png" alt="Tak" class="audience-icon">
+                            <p class="audience-text">Lorem ipsum dolor sit amet, bleh adipiscing elit.</p>
+                        </div>
+                        <div class="audience-item">
+                            <img src="yes.png" alt="Tak" class="audience-icon">
+                            <p class="audience-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        </div>
+                        <div class="audience-item">
+                            <img src="yes.png" alt="Tak" class="audience-icon">
+                            <p class="audience-text">Lorem ipsum dolor sit amet, tf adipiscing elit.</p>
+                        </div>
+                        <div class="audience-item">
+                            <img src="yes.png" alt="Tak" class="audience-icon">
+                            <p class="audience-text">Lorem ipsum dolor sit amet, maruqis adipiscing elit.</p>
+                        </div>
+                        <div class="audience-item">
+                            <img src="yes.png" alt="Tak" class="audience-icon">
+                            <p class="audience-text">Lorem ipsum dolor sit amet, brother adipiscing elit.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+
 
     <!-- FAQ Section -->
     <section class="faq-section">
@@ -247,62 +280,52 @@
             <h2 class="faq-title">Najczęściej zadawane pytania</h2>
 
             <div class="faq-list">
-                <div class="faq-item">
-                    <button class="faq-question">
+                <div class="faq-item active">
+                    <button class="faq-question" aria-expanded="true" aria-controls="faq-answer-1">
                         <span>Jak długo trwa wdrożenie?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
+                        <img src="minus.svg" alt="" class="faq-icon">
                     </button>
-                    <div class="faq-answer">
+                    <div class="faq-answer" id="faq-answer-1" aria-hidden="false">
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget gravida massa, a mollis mauris. Sed at euismod nisi, vel tincidunt sem.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
-                    <button class="faq-question">
+                    <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-2">
                         <span>Jakie są koszty współpracy?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
+                        <img src="plus.svg" alt="" class="faq-icon">
                     </button>
-                    <div class="faq-answer">
+                    <div class="faq-answer" id="faq-answer-2" aria-hidden="true">
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget gravida massa, a mollis mauris. Sed at euismod nisi, vel tincidunt sem.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
-                    <button class="faq-question">
+                    <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-3">
                         <span>Czy oferujecie gwarancję rezultatów?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
+                        <img src="plus.svg" alt="" class="faq-icon">
                     </button>
-                    <div class="faq-answer">
+                    <div class="faq-answer" id="faq-answer-3" aria-hidden="true">
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget gravida massa, a mollis mauris. Sed at euismod nisi, vel tincidunt sem.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
-                    <button class="faq-question">
+                    <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-4">
                         <span>Czy mogę przerwać współpracę w każdym momencie?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
+                        <img src="plus.svg" alt="" class="faq-icon">
                     </button>
-                    <div class="faq-answer">
+                    <div class="faq-answer" id="faq-answer-4" aria-hidden="true">
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget gravida massa, a mollis mauris. Sed at euismod nisi, vel tincidunt sem.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
-                    <button class="faq-question">
+                    <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-5">
                         <span>Jak wygląda pierwsza rozmowa?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
+                        <img src="plus.svg" alt="" class="faq-icon">
                     </button>
-                    <div class="faq-answer">
+                    <div class="faq-answer" id="faq-answer-5" aria-hidden="true">
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget gravida massa, a mollis mauris. Sed at euismod nisi, vel tincidunt sem.</p>
                     </div>
                 </div>
@@ -504,11 +527,17 @@
                 // Close all items
                 faqItems.forEach(item => {
                     item.classList.remove('active');
+                    item.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+                    item.querySelector('.faq-answer').setAttribute('aria-hidden', 'true');
+                    item.querySelector('.faq-icon').src = 'plus.svg';
                 });
 
                 // Open clicked item if it wasn't already open
                 if (!isActive) {
                     currentItem.classList.add('active');
+                    currentItem.querySelector('.faq-question').setAttribute('aria-expanded', 'true');
+                    currentItem.querySelector('.faq-answer').setAttribute('aria-hidden', 'false');
+                    currentItem.querySelector('.faq-icon').src = 'minus.svg';
                 }
             });
         });
