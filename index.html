@@ -847,6 +847,36 @@
                 }, 100);
             }
 
+            // Swipe functionality on main image
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            lightboxMainImage.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, false);
+
+            lightboxMainImage.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, false);
+
+            function handleSwipe() {
+                const swipeThreshold = 50; // Minimum distance for swipe
+                const diff = touchStartX - touchEndX;
+
+                if (Math.abs(diff) < swipeThreshold) return;
+
+                if (diff > 0) {
+                    // Swiped left - next image
+                    currentImageIndex = (currentImageIndex + 1) % images.length;
+                } else {
+                    // Swiped right - previous image
+                    currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                }
+
+                updateLightbox();
+            }
+
             // Close button
             lightboxClose.addEventListener('click', closeLightbox);
 
