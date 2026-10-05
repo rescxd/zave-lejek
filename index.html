@@ -404,6 +404,27 @@
         <p class="footer-text">© 2026 Zave Agency. Wszelkie prawa zastrzeżone.</p>
     </footer>
 
+    <!-- Image Lightbox (Mobile Only) -->
+    <div id="imageLightbox" class="image-lightbox">
+        <div class="image-lightbox-overlay"></div>
+        <div class="image-lightbox-content">
+            <div class="image-lightbox-header">
+                <div class="image-lightbox-counter">
+                    <span id="lightboxCurrentIndex">1</span>/<span id="lightboxTotalImages">14</span>
+                </div>
+                <button class="image-lightbox-close" id="lightboxClose">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2 2L14 14M14 2L2 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="image-lightbox-main">
+                <img id="lightboxMainImage" src="" alt="">
+            </div>
+            <div class="image-lightbox-thumbnails" id="lightboxThumbnails"></div>
+        </div>
+    </div>
+
     <!-- Video End Popup -->
     <div id="videoEndPopup" class="popup-overlay">
         <div class="popup-modal">
@@ -748,6 +769,97 @@
                 // Flaga isUserHovering zostanie sprawdzona po zakończeniu cyklu
             });
         });
+
+        // Image Lightbox - Mobile Only
+        (function() {
+            // Only run on mobile
+            function isMobile() {
+                return window.innerWidth <= 480;
+            }
+
+            if (!isMobile()) return;
+
+            const lightbox = document.getElementById('imageLightbox');
+            const lightboxMainImage = document.getElementById('lightboxMainImage');
+            const lightboxThumbnails = document.getElementById('lightboxThumbnails');
+            const lightboxCurrentIndex = document.getElementById('lightboxCurrentIndex');
+            const lightboxTotalImages = document.getElementById('lightboxTotalImages');
+            const lightboxClose = document.getElementById('lightboxClose');
+            const opinionImages = document.querySelectorAll('.opinion-image');
+
+            let currentImageIndex = 0;
+            const images = [];
+
+            // Collect all opinion images
+            opinionImages.forEach((img, index) => {
+                images.push(img.src);
+
+                // Add click handler to open lightbox
+                img.addEventListener('click', () => {
+                    if (isMobile()) {
+                        openLightbox(index);
+                    }
+                });
+            });
+
+            function openLightbox(index) {
+                currentImageIndex = index;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                updateLightbox();
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            function updateLightbox() {
+                // Update main image
+                lightboxMainImage.src = images[currentImageIndex];
+
+                // Update counter
+                lightboxCurrentIndex.textContent = currentImageIndex + 1;
+                lightboxTotalImages.textContent = images.length;
+
+                // Update thumbnails
+                lightboxThumbnails.innerHTML = '';
+                images.forEach((src, index) => {
+                    const thumbnail = document.createElement('img');
+                    thumbnail.src = src;
+                    thumbnail.className = 'image-lightbox-thumbnail';
+                    if (index === currentImageIndex) {
+                        thumbnail.classList.add('active');
+                    }
+                    thumbnail.addEventListener('click', () => {
+                        currentImageIndex = index;
+                        updateLightbox();
+                    });
+                    lightboxThumbnails.appendChild(thumbnail);
+                });
+
+                // Scroll active thumbnail into view
+                setTimeout(() => {
+                    const activeThumbnail = lightboxThumbnails.querySelector('.active');
+                    if (activeThumbnail) {
+                        activeThumbnail.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                    }
+                }, 100);
+            }
+
+            // Close button
+            lightboxClose.addEventListener('click', closeLightbox);
+
+            // Close on overlay click
+            lightbox.querySelector('.image-lightbox-overlay').addEventListener('click', closeLightbox);
+
+            // Re-check on resize
+            window.addEventListener('resize', () => {
+                if (!isMobile() && lightbox.classList.contains('active')) {
+                    closeLightbox();
+                }
+            });
+        })();
     </script>
 </body>
 </html>
