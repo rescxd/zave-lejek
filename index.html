@@ -500,24 +500,7 @@
                     </div>
                 </div>
 
-                <!-- Pytanie 4 -->
-                <div class="form-group">
-                    <label class="question-label">Czego najbardziej potrzebujesz?</label>
-                    <div class="radio-group">
-                        <label class="radio-label">
-                            <input type="radio" name="question4" value="klienci" required>
-                            <span>Więcej klientów</span>
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="question4" value="optymalizacja">
-                            <span>Optymalizacja procesów</span>
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="question4" value="marketing">
-                            <span>Marketing i widoczność</span>
-                        </label>
-                    </div>
-                </div>
+
 
                 <button type="submit" class="popup-submit">Wyślij formularz</button>
             </form>
@@ -624,7 +607,7 @@
         // Show popup when CTA buttons are clicked
         ctaButtons.forEach(button => {
             button.addEventListener('click', () => {
-                popupTitle.textContent = 'Zarezerwuj darmową rozmowę';
+                popupTitle.textContent = 'Odpowiedz na 5 pytań';
                 popup.classList.add('active');
                 document.body.style.overflow = 'hidden'; // Prevent scrolling
             });
