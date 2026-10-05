@@ -609,14 +609,26 @@
         const closeBtn = document.querySelector('.popup-close');
         const leadForm = document.getElementById('leadForm');
         const wistiaPlayer = document.querySelector('wistia-player');
+        const popupTitle = document.querySelector('.popup-title');
+        const ctaButtons = document.querySelectorAll('.cta-button, .cta-button-main');
 
         // Show popup when video ends
         if (wistiaPlayer) {
             wistiaPlayer.addEventListener('ended', () => {
+                popupTitle.textContent = 'Dziękujemy za obejrzenie!';
                 popup.classList.add('active');
                 document.body.style.overflow = 'hidden'; // Prevent scrolling
             });
         }
+
+        // Show popup when CTA buttons are clicked
+        ctaButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                popupTitle.textContent = 'Zarezerwuj darmową rozmowę';
+                popup.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            });
+        });
 
         // Close popup function
         function closePopup() {
