@@ -432,21 +432,26 @@
             <h2 class="popup-title">Dziękujemy za obejrzenie!</h2>
             <p class="popup-subtitle">Wypełnij formularz, aby umówić darmową konsultację</p>
 
-            <form id="leadForm" class="popup-form">
+            <form id="leadForm" class="popup-form" novalidate>
                 <div class="form-group">
                     <label for="name">Imię</label>
                     <input type="text" id="name" name="name" required>
                 </div>
 
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
                 <div id="tess" class="form-group">
                     <label for="phone">Numer telefonu</label>
-                    <input type="tel" id="phone" name="phone" required>
+                    <input type="tel" id="phone" name="phone" inputmode="numeric" pattern="[0-9]*" autocomplete="tel" required>
                 </div>
 
                 <!-- Pytanie 1 -->
                 <div class="form-group">
                     <label class="question-label">Jak duże jest Twoje studio?</label>
-                    <div class="radio-group">
+                    <div class="radio-group" data-group="question1">
                         <label class="radio-label">
                             <input type="radio" name="question1" value="maly" required>
                             <span>Małe (1-2 stanowiska)</span>
@@ -465,7 +470,7 @@
                 <!-- Pytanie 2 -->
                 <div class="form-group">
                     <label class="question-label">Ile lat działasz na rynku?</label>
-                    <div class="radio-group">
+                    <div class="radio-group" data-group="question2">
                         <label class="radio-label">
                             <input type="radio" name="question2" value="nowy" required>
                             <span>Mniej niż rok</span>
@@ -484,7 +489,7 @@
                 <!-- Pytanie 3 -->
                 <div class="form-group">
                     <label class="question-label">Jaki jest Twój średni miesięczny przychód?</label>
-                    <div class="radio-group">
+                    <div class="radio-group" data-group="question3">
                         <label class="radio-label">
                             <input type="radio" name="question3" value="niski" required>
                             <span>Poniżej 20,000 zł</span>
@@ -499,8 +504,6 @@
                         </label>
                     </div>
                 </div>
-
-
 
                 <button type="submit" class="popup-submit">Wyślij formularz</button>
             </form>
@@ -629,30 +632,148 @@
             }
         });
 
+        function setFieldState(field, isValid) {
+            if (!field) return;
+
+            const isInput = field.tagName === 'INPUT';
+            const fieldGroup = field.closest('.form-group');
+
+            if (isInput && field.type !== 'radio') {
+                field.classList.toggle('is-invalid', !isValid);
+                field.setAttribute('aria-invalid', String(!isValid));
+                if (fieldGroup) fieldGroup.classList.toggle('invalid', !isValid);
+            }
+
+            if (field.name && field.name.startsWith('question')) {
+                const questionGroup = field.closest('.radio-group');
+                if (questionGroup) {
+                    questionGroup.classList.toggle('is-invalid', !isValid);
+                }
+                if (fieldGroup) fieldGroup.classList.toggle('invalid', !isValid);
+            }
+        }
+
+        function validateEmail(value) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+        }
+
+        function validatePhone(value) {
+            const digits = value.replace(/\D/g, '');
+            return digits.length >= 9 && digits.length <= 15;
+        }
+
+        function validateRadioGroup(groupName) {
+            const checked = leadForm.querySelector(`input[name="${groupName}"]:checked`);
+            const radioGroup = document.querySelector(`.radio-group[data-group="${groupName}"]`);
+            const groupParent = radioGroup ? radioGroup.closest('.form-group') : null;
+
+            const isValid = Boolean(checked);
+            if (radioGroup) radioGroup.classList.toggle('is-invalid', !isValid);
+            if (groupParent) groupParent.classList.toggle('invalid', !isValid);
+            return isValid;
+        }
+
+        function validateField(field) {
+            if (!field) return true;
+
+            if (field.type === 'radio') {
+                const groupName = field.name;
+                return validateRadioGroup(groupName);
+            }
+
+            const value = field.value.trim();
+            let isValid = true;
+
+            if (field.required && !value) {
+                isValid = false;
+            }
+
+            if (field.id === 'email' && value && !validateEmail(value)) {
+                isValid = false;
+            }
+
+            if (field.id === 'phone' && value && !validatePhone(value)) {
+                isValid = false;
+            }
+
+            setFieldState(field, isValid);
+            return isValid;
+        }
+
+        let hasAttemptedSubmit = false;
+
+        function validateForm() {
+            hasAttemptedSubmit = true;
+            let isValid = true;
+
+            ['name', 'email', 'phone'].forEach((fieldName) => {
+                const field = leadForm.elements[fieldName];
+                if (!validateField(field)) {
+                    isValid = false;
+                }
+            });
+
+            ['question1', 'question2', 'question3'].forEach((groupName) => {
+                if (!validateRadioGroup(groupName)) {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                const firstInvalid = document.querySelector('.is-invalid, .radio-group.is-invalid');
+                if (firstInvalid) {
+                    firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+
+            return isValid;
+        }
+
+        ['name', 'email', 'phone'].forEach((fieldName) => {
+            const field = leadForm.elements[fieldName];
+            if (!field) return;
+
+            field.addEventListener('input', () => {
+                if (fieldName === 'phone') {
+                    const cursorPosition = field.selectionStart ?? field.value.length;
+                    const digitsBeforeCursor = field.value.slice(0, cursorPosition).replace(/\D/g, '').length;
+                    const digitsOnly = field.value.replace(/\D/g, '');
+
+                    if (digitsOnly !== field.value) {
+                        field.value = digitsOnly;
+                        field.setSelectionRange(digitsBeforeCursor, digitsBeforeCursor);
+                    }
+                }
+
+                if (hasAttemptedSubmit) validateField(field);
+            });
+            field.addEventListener('blur', () => {
+                if (hasAttemptedSubmit) validateField(field);
+            });
+        });
+
+        leadForm.querySelectorAll('input[type="radio"]').forEach((radio) => {
+            radio.addEventListener('change', () => {
+                if (hasAttemptedSubmit) {
+                    ['question1', 'question2', 'question3'].forEach(validateRadioGroup);
+                }
+            });
+        });
+
         // Form submission
         leadForm.addEventListener('submit', (e) => {
             e.preventDefault();
+
+            if (!validateForm()) {
+                return;
+            }
 
             // Collect form data
             const formData = new FormData(leadForm);
             const data = Object.fromEntries(formData);
 
-            // Log data (replace with actual API call)
             console.log('Form submitted:', data);
-
-            // You can add your API call here
-            // fetch('/api/submit', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify(data)
-            // });
-
-            // Show success message
-            alert('Dziękujemy! Skontaktujemy się z Tobą wkrótce.');
-
-            // Close popup and reset form
-            closePopup();
-            leadForm.reset();
+            window.location.href = 'call.html';
         });
 
         // Process V2 Bars Animation - NOWA PROSTA LOGIKA
