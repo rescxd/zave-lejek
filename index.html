@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1458701175749577');
+    fbq('track', 'PageView');
+    </script>
+    <!-- End Meta Pixel Code -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zarabiaj do 10 tysięcy więcej | Studio Detailingowe</title>
@@ -23,6 +37,11 @@
     <script src="https://fast.wistia.com/embed/e1dvrcl1e5.js" async type="module"></script>
 </head>
 <body>
+    <!-- Meta Pixel Code (noscript) -->
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1458701175749577&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code (noscript) -->
     <section class="hero-section">
         <div class="hero-content">
             <!-- Logo -->
@@ -343,7 +362,7 @@
                 </div>
             </div>
             <div class="founder-note-photo">
-                <img src="kuba.png" alt="Jakub Stegliński" class="founder-note-image">
+                <img src="kuba6.png" alt="Jakub Stegliński" class="founder-note-image">
             </div>
         </div>
     </section>
@@ -512,7 +531,12 @@
         </div>
     </div>
 
-    <div id="ghlPopupEmbed"></div>
+    <div id="ghlPopupEmbed" class="popup-overlay" aria-hidden="true">
+        <div class="popup-modal" role="dialog" aria-modal="true" aria-label="Formularz rezerwacji rozmowy">
+            <button class="popup-close" id="ghlPopupClose" type="button" aria-label="Zamknij formularz">&times;</button>
+            <div class="popup-form" id="ghlPopupForm"></div>
+        </div>
+    </div>
 
     <script>
         // Animated text typewriter effect
@@ -615,21 +639,25 @@
 
         // GoHighLevel popup form
         const ghlPopupEmbed = document.getElementById('ghlPopupEmbed');
+        const ghlPopupForm = document.getElementById('ghlPopupForm');
+        const ghlPopupClose = document.getElementById('ghlPopupClose');
         const wistiaPlayer = document.querySelector('wistia-player');
         const ctaButtons = document.querySelectorAll('.cta-button, .cta-button-main');
         let isGhlPopupLoading = false;
 
         function openGhlPopup() {
-            if (isGhlPopupLoading) return;
+            if (isGhlPopupLoading || ghlPopupEmbed.classList.contains('active')) return;
             isGhlPopupLoading = true;
 
-            ghlPopupEmbed.replaceChildren();
+            document.body.style.overflow = 'hidden';
+            ghlPopupEmbed.classList.add('active');
+            ghlPopupEmbed.setAttribute('aria-hidden', 'false');
 
             const formIframe = document.createElement('iframe');
             formIframe.src = 'https://api.leadconnectorhq.com/widget/form/L2OCDsaWXxUeGIbEP3RI';
-            formIframe.style.cssText = 'display:none;width:100%;height:100%;border:none;border-radius:15px';
-            formIframe.id = 'popup-L2OCDsaWXxUeGIbEP3RI';
-            formIframe.setAttribute('data-layout', "{'id':'POPUP'}");
+            formIframe.style.cssText = 'width:100%;height:100%;border:none;border-radius:15px';
+            formIframe.id = 'inline-L2OCDsaWXxUeGIbEP3RI';
+            formIframe.setAttribute('data-layout', "{'id':'INLINE'}");
             formIframe.setAttribute('data-trigger-type', 'alwaysShow');
             formIframe.setAttribute('data-trigger-value', '');
             formIframe.setAttribute('data-activation-type', 'alwaysActivated');
@@ -637,13 +665,12 @@
             formIframe.setAttribute('data-deactivation-type', 'neverDeactivate');
             formIframe.setAttribute('data-deactivation-value', '');
             formIframe.setAttribute('data-form-name', 'VSL QUALIFICATION - OCTOBER');
-            formIframe.setAttribute('data-height', '762');
-            formIframe.setAttribute('data-layout-iframe-id', 'popup-L2OCDsaWXxUeGIbEP3RI');
+            formIframe.setAttribute('data-height', '940');
+            formIframe.setAttribute('data-layout-iframe-id', 'inline-L2OCDsaWXxUeGIbEP3RI');
             formIframe.setAttribute('data-form-id', 'L2OCDsaWXxUeGIbEP3RI');
             formIframe.setAttribute('data-cookie-consent', 'true');
             formIframe.setAttribute('data-cookie-consent-provider', 'auto');
             formIframe.title = 'VSL QUALIFICATION - OCTOBER';
-            formIframe.setAttribute('data-modal-height', '750');
 
             const formScript = document.createElement('script');
             formScript.src = 'https://link.msgsndr.com/js/form_embed.js';
@@ -654,8 +681,24 @@
                 isGhlPopupLoading = false;
             };
 
-            ghlPopupEmbed.append(formIframe, formScript);
+            ghlPopupForm.replaceChildren(formIframe, formScript);
         }
+
+        function closeGhlPopup() {
+            ghlPopupEmbed.classList.remove('active');
+            ghlPopupEmbed.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        ghlPopupClose.addEventListener('click', closeGhlPopup);
+        ghlPopupEmbed.addEventListener('click', (event) => {
+            if (event.target === ghlPopupEmbed) closeGhlPopup();
+        });
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && ghlPopupEmbed.classList.contains('active')) {
+                closeGhlPopup();
+            }
+        });
 
         if (wistiaPlayer) {
             wistiaPlayer.addEventListener('ended', openGhlPopup);
