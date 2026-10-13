@@ -4,4 +4,8 @@
     { "source": "/call", "destination": "/call.html" },
     { "source": "/thx", "destination": "/thx.html" }
   ]
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 06bea35 (founder)
