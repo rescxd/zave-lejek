@@ -196,6 +196,18 @@ span.headline-line-2 {
     letter-spacing: -0.03em;
 }
 
+.hero-content {
+    z-index: 8;
+}
+
+.info-vsl {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 10;
+    margin-top: 12px;
+}
+
 .description strong {
     font-weight: 500;
     color: #28282B;
@@ -1273,6 +1285,12 @@ border: 1px solid rgba(255, 255, 255, 0.30);; /* Czyste białe obramowanie 100% 
         font-size: 12px;
     }
 
+    .info-vsl {
+        margin-top: 32px;
+    }
+
+
+
 }
 
 /* FAQ Section */
@@ -1428,6 +1446,12 @@ border: 1px solid rgba(255, 255, 255, 0.30);; /* Czyste białe obramowanie 100% 
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+@media (max-width: 768px) {
+    .cta-box {
+        background-image: linear-gradient(180deg, #8B3FFF 0%, #6F00FF 100%);
+    }
 }
 
 .cta-title {
