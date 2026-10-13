@@ -643,51 +643,65 @@
         const ghlPopupClose = document.getElementById('ghlPopupClose');
         const wistiaPlayer = document.querySelector('wistia-player');
         const ctaButtons = document.querySelectorAll('.cta-button, .cta-button-main');
-        let isGhlPopupLoading = false;
+        let previousBodyOverflow = '';
+        let previousRootOverflow = '';
 
         function openGhlPopup() {
-            if (isGhlPopupLoading || ghlPopupEmbed.classList.contains('active')) return;
-            isGhlPopupLoading = true;
+            if (ghlPopupEmbed.classList.contains('active')) return;
 
+            previousBodyOverflow = document.body.style.overflow;
+            previousRootOverflow = document.documentElement.style.overflow;
             document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
             ghlPopupEmbed.classList.add('active');
             ghlPopupEmbed.setAttribute('aria-hidden', 'false');
 
-            const formIframe = document.createElement('iframe');
-            formIframe.src = 'https://api.leadconnectorhq.com/widget/form/Lfmjl3j9WCxRHGDeaA1A';
-            formIframe.style.cssText = 'width:100%;height:100%;border:none;border-radius:15px';
-            formIframe.id = 'inline-Lfmjl3j9WCxRHGDeaA1A';
-            formIframe.setAttribute('data-layout', "{'id':'INLINE'}");
-            formIframe.setAttribute('data-trigger-type', 'alwaysShow');
-            formIframe.setAttribute('data-trigger-value', '');
-            formIframe.setAttribute('data-activation-type', 'alwaysActivated');
-            formIframe.setAttribute('data-activation-value', '');
-            formIframe.setAttribute('data-deactivation-type', 'neverDeactivate');
-            formIframe.setAttribute('data-deactivation-value', '');
-            formIframe.setAttribute('data-form-name', 'VSL QUALIFICATION - OCTOBER [13.10]');
-            formIframe.setAttribute('data-height', '940');
-            formIframe.setAttribute('data-layout-iframe-id', 'inline-Lfmjl3j9WCxRHGDeaA1A');
-            formIframe.setAttribute('data-form-id', 'Lfmjl3j9WCxRHGDeaA1A');
-            formIframe.setAttribute('data-cookie-consent', 'true');
-            formIframe.setAttribute('data-cookie-consent-provider', 'auto');
-            formIframe.title = 'VSL QUALIFICATION - OCTOBER [13.10]';
+            if (!ghlPopupForm.hasChildNodes()) {
+                const formIframe = document.createElement('iframe');
+                formIframe.src = 'https://api.leadconnectorhq.com/widget/form/Lfmjl3j9WCxRHGDeaA1A';
+                formIframe.style.cssText = 'width:100%;height:1113px;border:none;border-radius:15px';
+                formIframe.setAttribute('scrolling', 'no');
+                const iframeScrollObserver = new MutationObserver(() => {
+                    if (formIframe.getAttribute('scrolling') !== 'no') {
+                        formIframe.setAttribute('scrolling', 'no');
+                    }
+                });
+                iframeScrollObserver.observe(formIframe, {
+                    attributes: true,
+                    attributeFilter: ['scrolling']
+                });
+                formIframe.id = 'inline-Lfmjl3j9WCxRHGDeaA1A';
+                formIframe.setAttribute('data-layout', "{'id':'INLINE'}");
+                formIframe.setAttribute('data-trigger-type', 'alwaysShow');
+                formIframe.setAttribute('data-trigger-value', '');
+                formIframe.setAttribute('data-activation-type', 'alwaysActivated');
+                formIframe.setAttribute('data-activation-value', '');
+                formIframe.setAttribute('data-deactivation-type', 'neverDeactivate');
+                formIframe.setAttribute('data-deactivation-value', '');
+                formIframe.setAttribute('data-form-name', 'VSL QUALIFICATION - OCTOBER [13.10]');
+                formIframe.setAttribute('data-height', '1113');
+                formIframe.setAttribute('data-layout-iframe-id', 'inline-Lfmjl3j9WCxRHGDeaA1A');
+                formIframe.setAttribute('data-form-id', 'Lfmjl3j9WCxRHGDeaA1A');
+                formIframe.setAttribute('data-cookie-consent', 'true');
+                formIframe.setAttribute('data-cookie-consent-provider', 'auto');
+                formIframe.title = 'VSL QUALIFICATION - OCTOBER [13.10]';
 
-            const formScript = document.createElement('script');
-            formScript.src = 'https://link.msgsndr.com/js/form_embed.js';
-            formScript.onload = () => {
-                isGhlPopupLoading = false;
-            };
-            formScript.onerror = () => {
-                isGhlPopupLoading = false;
-            };
+                const formScript = document.createElement('script');
+                formScript.src = 'https://link.msgsndr.com/js/form_embed.js';
+                formScript.onerror = () => {
+                    iframeScrollObserver.disconnect();
+                    ghlPopupForm.replaceChildren();
+                };
 
-            ghlPopupForm.replaceChildren(formIframe, formScript);
+                ghlPopupForm.replaceChildren(formIframe, formScript);
+            }
         }
 
         function closeGhlPopup() {
             ghlPopupEmbed.classList.remove('active');
             ghlPopupEmbed.setAttribute('aria-hidden', 'true');
-            document.body.style.overflow = '';
+            document.body.style.overflow = previousBodyOverflow;
+            document.documentElement.style.overflow = previousRootOverflow;
         }
 
         ghlPopupClose.addEventListener('click', closeGhlPopup);
