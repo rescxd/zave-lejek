@@ -2,6 +2,10 @@
   "cleanUrls": true,
   "rewrites": [
     { "source": "/call", "destination": "/call.html" },
-    { "source": "/thx", "destination": "/thx.html" }
+    { "source": "/thx", "destination": "/thx.html" },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
   ]
 }
